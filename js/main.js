@@ -30,38 +30,38 @@ var getRandomArrWithoutRepeat = function (min, max) {
   return arr;
 };
 var getPictures = function () {
-  var arrPictures = [];
-  var getObjPictures = function (numJpg, numLikes) {
-    var objPictures = {};
-    objPictures.url = 'photos/' + numJpg + '.jpg';
-    objPictures.description = '';
-    objPictures.likes = numLikes;
-    objPictures.comments = function () {
-      var arrComments = [];
-      var getObjComments = function (numAvatar, messages, name) {
-        var objComments = {};
-        var arrNumMessages = getRandomArrWithoutRepeat(0, messages.length - 1);
-        objComments.avatar = 'img/avatar-' + numAvatar + '.svg';
-        objComments.message = messages[arrNumMessages[0]] + ' ' + messages[arrNumMessages[1]];
-        objComments.name = name;
-        return objComments;
+  var pictures = [];
+  var getPicture = function (numJpg, numLikes) {
+    var picture = {};
+    picture.url = 'photos/' + numJpg + '.jpg';
+    picture.description = '';
+    picture.likes = numLikes;
+    picture.comments = function () {
+      var comments = [];
+      var getComment = function (numAvatar, messages, name) {
+        var comment = {};
+        var numMessages = getRandomArrWithoutRepeat(0, messages.length - 1);
+        comment.avatar = 'img/avatar-' + numAvatar + '.svg';
+        comment.message = messages[numMessages[0]] + ' ' + messages[numMessages[1]];
+        comment.name = name;
+        return comment;
       };
       var num = getRandomNumber(0, 10);
       for (var i = 0; i < num; i++) {
         var numAvatar = getRandomNumber(1, 6);
         var numName = getRandomNumber(0, NAMES.length - 1);
-        arrComments.push(getObjComments(numAvatar, MESSAGES, NAMES[numName]));
+        comments.push(getComment(numAvatar, MESSAGES, NAMES[numName]));
       }
-      return arrComments;
+      return comments;
     }();
-    return objPictures;
+    return picture;
   };
-  var arrNumPhotos = getRandomArrWithoutRepeat(1, 25);
+  var numPhotos = getRandomArrWithoutRepeat(1, 25);
   for (var i = 0; i < 25; i++) {
     var numLikes = getRandomNumber(15, 200);
-    arrPictures.push(getObjPictures(arrNumPhotos[i], numLikes));
+    pictures.push(getPicture(numPhotos[i], numLikes));
   }
-  return arrPictures;
+  return pictures;
 };
 var renderPicture = function (objRenderPictures) {
   var pictureElement = pictureTemplate.cloneNode(true);
@@ -76,3 +76,28 @@ for (var i = 0; i < 25; i++) {
   fragment.appendChild(renderPicture(arrRenderPictures[i]));
 }
 picturesWrapper.appendChild(fragment);
+
+var bigPicture = document.querySelector('.big-picture');
+bigPicture.classList.remove('hidden');
+bigPicture.querySelector('.big-picture__img img').src = arrRenderPictures[0].url;
+bigPicture.querySelector('.likes-count').textContent = arrRenderPictures[0].likes;
+bigPicture.querySelector('.comments-count').textContent = arrRenderPictures[0].comments.length;
+var socialCommentsWrapper = bigPicture.querySelector('.social__comments');
+var socialComment = bigPicture.querySelectorAll('.social__comment');
+for (var c = 0; c < socialComment.length; c++) {
+  socialCommentsWrapper.removeChild(socialComment[c]);
+}
+for (c = 0; c < arrRenderPictures[0].comments.length; c++) {
+  var comment = document.createElement('li');
+  comment.className = 'social__comment';
+  comment.innerHTML = '<img width="35" height="35" class="social__picture" > <p class="social__text"></p>';
+  comment.querySelector('.social__picture').src = arrRenderPictures[0].comments[c].avatar;
+  comment.querySelector('.social__picture').alt = arrRenderPictures[0].comments[c].name;
+  comment.querySelector('.social__text').textContent = arrRenderPictures[0].comments[c].message;
+  fragment.appendChild(comment);
+}
+socialCommentsWrapper.appendChild(fragment);
+bigPicture.querySelector('.social__caption').textContent = arrRenderPictures[0].description;
+bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+bigPicture.querySelector('.comments-loader').classList.add('hidden');
+document.querySelector('body').classList.add('modal-open');
