@@ -63,16 +63,16 @@ var getPictures = function () {
   }
   return arrPictures;
 };
-var renderPicture = function (obj) {
+var renderPicture = function (objRenderPictures) {
   var pictureElement = pictureTemplate.cloneNode(true);
-  pictureElement.querySelector('.picture__img').src = obj.url;
-  pictureElement.querySelector('.picture__likes').textContent = obj.likes;
-  pictureElement.querySelector('.picture__comments').textContent = obj.comments.length;
+  pictureElement.querySelector('.picture__img').src = objRenderPictures.url;
+  pictureElement.querySelector('.picture__likes').textContent = objRenderPictures.likes;
+  pictureElement.querySelector('.picture__comments').textContent = objRenderPictures.comments.length;
   return pictureElement;
 };
 var fragment = document.createDocumentFragment();
-var pArr = getPictures();
+var arrRenderPictures = getPictures();
 for (var i = 0; i < 25; i++) {
-  fragment.appendChild(renderPicture(pArr[i]));
+  fragment.appendChild(renderPicture(arrRenderPictures[i]));
 }
 picturesWrapper.appendChild(fragment);
