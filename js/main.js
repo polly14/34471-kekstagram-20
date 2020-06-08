@@ -17,6 +17,10 @@ var shuffle = function (a) {
   }
   return a;
 };
+var getRandomNumber = function (min, max) {
+  var rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+};
 var getRandomArrWithoutRepeat = function (min, max) {
   var arr = [];
   for (var j = min; j <= max; j++) {
@@ -25,39 +29,39 @@ var getRandomArrWithoutRepeat = function (min, max) {
   shuffle(arr);
   return arr;
 };
-var getArr = function () {
-  var arr = [];
-  var getObj = function (j, l) {
-    var obj = {};
-    obj.url = 'photos/' + j + '.jpg';
-    obj.description = '';
-    obj.likes = l;
-    obj.comments = function () {
+var getPictures = function () {
+  var arrPictures = [];
+  var getObjPictures = function (numJpg, numLikes) {
+    var objPictures = {};
+    objPictures.url = 'photos/' + numJpg + '.jpg';
+    objPictures.description = '';
+    objPictures.likes = numLikes;
+    objPictures.comments = function () {
       var arrComments = [];
-      var getCommentsObj = function (a, m, m2, n) {
-        var CommentsObj = {};
-        CommentsObj.avatar = 'img/avatar-' + a + '.svg';
-        CommentsObj.message = m + ' ' + m2;
-        CommentsObj.name = n;
-        return CommentsObj;
+      var getObjComments = function (numAvatar, messages, name) {
+        var objComments = {};
+        var arrNumMessages = getRandomArrWithoutRepeat(0, messages.length - 1);
+        objComments.avatar = 'img/avatar-' + numAvatar + '.svg';
+        objComments.message = messages[arrNumMessages[0]] + ' ' + messages[arrNumMessages[1]];
+        objComments.name = name;
+        return objComments;
       };
-      var num = Math.random().toFixed(1) * 10;
+      var num = getRandomNumber(0, 10);
       for (var i = 0; i < num; i++) {
-        var arrAvatar = getRandomArrWithoutRepeat(1, 6);
-        var arrMessage = getRandomArrWithoutRepeat(0, MESSAGES.length - 1);
-        var arrName = getRandomArrWithoutRepeat(0, NAMES.length - 1);
-        arrComments.push(getCommentsObj(arrAvatar[0], MESSAGES[arrMessage[0]], MESSAGES[arrMessage[1]], NAMES[arrName[0]]));
+        var numAvatar = getRandomNumber(1, 6);
+        var numName = getRandomNumber(0, NAMES.length - 1);
+        arrComments.push(getObjComments(numAvatar, MESSAGES, NAMES[numName]));
       }
       return arrComments;
     }();
-    return obj;
+    return objPictures;
   };
-  var arrPhotos = getRandomArrWithoutRepeat(1, 25);
-  var arrLikes = getRandomArrWithoutRepeat(15, 200);
+  var arrNumPhotos = getRandomArrWithoutRepeat(1, 25);
   for (var i = 0; i < 25; i++) {
-    arr.push(getObj(arrPhotos[i], arrLikes[i]));
+    var numLikes = getRandomNumber(15, 200);
+    arrPictures.push(getObjPictures(arrNumPhotos[i], numLikes));
   }
-  return arr;
+  return arrPictures;
 };
 var renderPicture = function (obj) {
   var pictureElement = pictureTemplate.cloneNode(true);
@@ -67,7 +71,7 @@ var renderPicture = function (obj) {
   return pictureElement;
 };
 var fragment = document.createDocumentFragment();
-var pArr = getArr();
+var pArr = getPictures();
 for (var i = 0; i < 25; i++) {
   fragment.appendChild(renderPicture(pArr[i]));
 }
