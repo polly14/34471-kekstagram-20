@@ -250,35 +250,55 @@ textDescription.addEventListener('input', function () {
   }
 });
 
-var getCheckMessages = function (arr, item) {
+var unique = function (arr) {
+  var result = [];
+  for (i = 0; i < arr.length; i++) {
+    if (!result.includes(arr[i])) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
+};
+
+var checkTags = function () {
+  var arrTags = textHashtags.value.split(' ');
+  var uniqueTags = unique(arrTags);
   var MIN_LENGTH = 2;
   var MAX_LENGTH = 20;
   var TAGS_AMOUNT = 5;
-  var re = /^#[a-zа-яA-ZА-Я0-9]+$/;
-  if (item.length < MIN_LENGTH) {
-    textHashtags.setCustomValidity('Хэштэг должен содержать не менее 1 символа, начинаться с #');
-  } if (item.length > MAX_LENGTH) {
-    textHashtags.setCustomValidity('Хэштэг должен содержать не более 20 символов, включая #');
-  } if (arr.length > TAGS_AMOUNT) {
-    textHashtags.setCustomValidity('Вы можете добавить не более 5 хэштэгов');
-  } if (!re.test(item)) {
-    textHashtags.setCustomValidity('Хэштэг должен содержать только буквы или цифры, начинаться с #. Пишите хэштэги через пробел.');
-  }
-  for (var j = 0; j < arr.length - 1; j++) {
-    if (item === arr[j]) {
-      textHashtags.setCustomValidity('Хэштэги не должны повторяться');
+  var re = /^#[a-zа-яA-ZА-Я0-9]*$/;
+  for (var j = 0; j < arrTags.length; j++) {
+    for (i = 0; i < arrTags.length; i++) {
+      if (re.test(arrTags[i]) && arrTags.length <= TAGS_AMOUNT && arrTags[i].length >= MIN_LENGTH && arrTags[i].length <= MAX_LENGTH && arrTags.length === uniqueTags.length) {
+        textHashtags.setCustomValidity('');
+      }
     }
-  }
-  if (re.test(item)) {
-    textHashtags.setCustomValidity('');
-  }
-};
-var checkTags = function () {
-  var arrTags = textHashtags.value.split(' ');
-  for (i = 0; i < arrTags.length; i++) {
-    getCheckMessages(arrTags, arrTags[i]);
+    for (i = 0; i < arrTags.length; i++) {
+      if (arrTags.length > TAGS_AMOUNT) {
+        textHashtags.setCustomValidity('Вы можете добавить не более 5 хэштэгов');
+      }
+    }
+    for (i = 0; i < arrTags.length; i++) {
+      if (arrTags[i].length < MIN_LENGTH) {
+        textHashtags.setCustomValidity('Хэштэг должен содержать не менее 1 символа, начинаться с #');
+      }
+    }
+    for (i = 0; i < arrTags.length; i++) {
+      if (arrTags[i].length > MAX_LENGTH) {
+        textHashtags.setCustomValidity('Хэштэг должен содержать не более 20 символов, включая #');
+      }
+    }
+    for (i = 0; i < arrTags.length; i++) {
+      if (arrTags.length !== uniqueTags.length) {
+        textHashtags.setCustomValidity('Хэштэги не должны повторяться');
+      }
+    }
+    for (i = 0; i < arrTags.length; i++) {
+      if (!re.test(arrTags[i])) {
+        textHashtags.setCustomValidity('Хэштэг должен содержать только буквы или цифры, начинаться с #. Пишите хэштэги через пробел.');
+      }
+    }
   }
 };
 textHashtags.addEventListener('input', checkTags);
-textHashtags.addEventListener('invalid', checkTags);
 
