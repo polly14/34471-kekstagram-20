@@ -45,11 +45,12 @@
     }
   });
   var checkTags = function () {
-    var arrTags = textHashtags.value.split(' ');
-    var uniqueTags = window.utils.unique(arrTags);
     var MIN_LENGTH = 2;
     var MAX_LENGTH = 20;
     var TAGS_AMOUNT = 5;
+    var arrTags = textHashtags.value.split(' ');
+    var uniqueTags = window.utils.unique(arrTags);
+
     var re = /^#[a-zа-яA-ZА-Я0-9]*$/;
     for (var j = 0; j < arrTags.length; j++) {
       for (var i = 0; i < arrTags.length; i++) {
