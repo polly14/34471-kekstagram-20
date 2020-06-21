@@ -17,8 +17,6 @@
     scaleControlValue.value = value;
   };
 
-  scaleControlValue.value = '100%';
-
   var scaleImageBigger = function () {
     var step = 25;
     var str = scaleControlValue.value;

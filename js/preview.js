@@ -5,6 +5,8 @@
   var uploadCancel = document.querySelector('#upload-cancel');
   var textHashtags = document.querySelector('.text__hashtags');
   var textDescription = document.querySelector('.text__description');
+  var imgUploadPreview = document.querySelector('.img-upload__preview img');
+  var scaleControlValue = document.querySelector('.scale__control--value');
   var onPopupEscPress = function (evt) {
     window.utils.isEscEvent(evt, closePopup);
   };
@@ -12,6 +14,8 @@
     imgUploadOverlay.classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', onPopupEscPress);
+    scaleControlValue.value = '100%';
+    imgUploadPreview.style = '';
   };
   var closePopup = function () {
     if (textHashtags !== document.activeElement && textDescription !== document.activeElement) {
