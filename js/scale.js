@@ -34,5 +34,3 @@
   scaleControlSmaller.addEventListener('click', scaleImageSmaller);
   scaleControlBigger.addEventListener('click', scaleImageBigger);
 })();
-
-

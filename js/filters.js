@@ -7,15 +7,6 @@
   var effectLevelValue = document.querySelector('.effect-level__value');
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-  var getLevelPin = function () {
-    var positionX = effectLevelPin.offsetLeft;
-    var lineWidth = effectLevelLine.offsetWidth;
-    var percent = Math.round(100 * positionX / lineWidth);
-    effectLevelValue.value = percent;
-    effectLevelPin.style.left = percent + '%';
-    effectLevelDepth.style.width = percent + '%';
-    return percent;
-  };
 
   var getFilterValue = function (filterName, percent) {
     if (filterName === 'none') {
@@ -55,11 +46,58 @@
   };
   effectsList.addEventListener('change', filterChange);
 
+  var getLevelPin = function () {
+    var positionX = effectLevelPin.offsetLeft;
+    var lineWidth = effectLevelLine.offsetWidth;
+    var percent = Math.round(100 * positionX / lineWidth);
+    effectLevelValue.value = percent;
+    return percent;
+  };
+
   var changeFilterValue = function () {
     var current = document.querySelector('.effects__radio:checked');
     getFilterValue(current.value, getLevelPin());
   };
-  effectLevelPin.addEventListener('mouseup', changeFilterValue);
+
+  effectLevelPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var lineWidth = effectLevelLine.offsetWidth;
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y
+      };
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+      if (effectLevelPin.offsetLeft < 0) {
+        effectLevelPin.style.left = 0 + 'px';
+        effectLevelDepth.style.width = 0 + 'px';
+      } else if (effectLevelPin.offsetLeft > lineWidth) {
+        effectLevelPin.style.left = lineWidth + 'px';
+        effectLevelDepth.style.width = lineWidth + 'px';
+      } else {
+        effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + 'px';
+        effectLevelDepth.style.width = (effectLevelPin.offsetLeft - shift.x) + 'px';
+      }
+      changeFilterValue();
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
 })();
-
-

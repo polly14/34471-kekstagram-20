@@ -58,5 +58,3 @@
     arrRenderPictures: arrRenderPictures
   };
 })();
-
-
