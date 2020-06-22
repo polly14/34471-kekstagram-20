@@ -57,5 +57,3 @@
   };
   textHashtags.addEventListener('input', checkTags);
 })();
-
-

@@ -17,8 +17,6 @@
     scaleControlValue.value = value;
   };
 
-  scaleControlValue.value = '100%';
-
   var scaleImageBigger = function () {
     var step = 25;
     var str = scaleControlValue.value;
@@ -34,5 +32,3 @@
   scaleControlSmaller.addEventListener('click', scaleImageSmaller);
   scaleControlBigger.addEventListener('click', scaleImageBigger);
 })();
-
-
