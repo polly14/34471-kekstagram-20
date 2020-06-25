@@ -24,7 +24,7 @@
     var re = /^#[a-zа-яA-ZА-Я0-9]*$/;
     for (var j = 0; j < arrTags.length; j++) {
       for (var i = 0; i < arrTags.length; i++) {
-        if (re.test(arrTags[i]) && arrTags.length <= TAGS_AMOUNT && arrTags[i].length >= MIN_LENGTH && arrTags[i].length <= MAX_LENGTH && arrTags.length === uniqueTags.length) {
+        if ((re.test(arrTags[i]) && arrTags.length <= TAGS_AMOUNT && arrTags[i].length >= MIN_LENGTH && arrTags[i].length <= MAX_LENGTH && arrTags.length === uniqueTags.length) || textHashtags.value.length === 0) {
           textHashtags.setCustomValidity('');
         }
       }
@@ -34,7 +34,7 @@
         }
       }
       for (i = 0; i < arrTags.length; i++) {
-        if (arrTags[i].length < MIN_LENGTH) {
+        if (arrTags[i].length < MIN_LENGTH && textHashtags.value.length !== 0) {
           textHashtags.setCustomValidity('Хэштэг должен содержать не менее 1 символа, начинаться с #');
         }
       }
@@ -49,7 +49,7 @@
         }
       }
       for (i = 0; i < arrTags.length; i++) {
-        if (!re.test(arrTags[i])) {
+        if (!re.test(arrTags[i]) && textHashtags.value.length !== 0) {
           textHashtags.setCustomValidity('Хэштэг должен содержать только буквы или цифры, начинаться с #. Пишите хэштэги через пробел.');
         }
       }

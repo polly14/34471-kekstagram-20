@@ -46,6 +46,6 @@
       bigPicture.querySelector('.comments-loader').classList.add('hidden');
     };
 
-  }, window.backend.errorHandler);
+  }, window.messages.errorHandler);
 
 })();
