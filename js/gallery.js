@@ -34,13 +34,13 @@
     window.renderGallery(pictures);
 
     window.filteredGallery = {
-      onDefault: window.debounce(function () {
+      onDefault: function () {
         pictures = [];
         amount = 25;
         pictures = response;
         window.renderGallery(pictures);
-      }),
-      onRandom: window.debounce(function () {
+      },
+      onRandom: function () {
         pictures = [];
         amount = 10;
         var numbers = window.utils.getRandomArrWithoutRepeat(0, response.length - 1);
@@ -48,14 +48,14 @@
           pictures.push(response[numbers[n]]);
         }
         window.renderGallery(pictures);
-      }),
-      onDiscussed: window.debounce(function () {
+      },
+      onDiscussed: function () {
         pictures = [];
         amount = 25;
         pictures = response.slice();
         pictures = window.getDiscussed(pictures).reverse();
         window.renderGallery(pictures);
-      })
+      }
     };
 
     window.renderBigPicture = function (numberOfPic) {
