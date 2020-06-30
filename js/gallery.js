@@ -55,27 +55,29 @@
         pictures = response.slice();
         pictures = window.getDiscussed(pictures).reverse();
         window.renderGallery(pictures);
-      }),
-      renderBigPicture: function (numberOfPic) {
-        bigPicture.querySelector('.big-picture__img img').src = pictures[numberOfPic].url;
-        bigPicture.querySelector('.likes-count').textContent = pictures[numberOfPic].likes;
-        bigPicture.querySelector('.comments-count').textContent = pictures[numberOfPic].comments.length;
-        socialCommentsWrapper.innerHTML = '';
-        for (var c = 0; c < pictures[numberOfPic].comments.length; c++) {
-          var comment = document.createElement('li');
-          comment.className = 'social__comment';
-          comment.innerHTML = '<img width="35" height="35" class="social__picture" > <p class="social__text"></p>';
-          comment.querySelector('.social__picture').src = pictures[numberOfPic].comments[c].avatar;
-          comment.querySelector('.social__picture').alt = pictures[numberOfPic].comments[c].name;
-          comment.querySelector('.social__text').textContent = pictures[numberOfPic].comments[c].message;
-          fragment.appendChild(comment);
-        }
-        socialCommentsWrapper.appendChild(fragment);
-        bigPicture.querySelector('.social__caption').textContent = pictures[numberOfPic].description;
-        bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-        bigPicture.querySelector('.comments-loader').classList.add('hidden');
-      }
+      })
     };
+
+    window.renderBigPicture = function (numberOfPic) {
+      bigPicture.querySelector('.big-picture__img img').src = pictures[numberOfPic].url;
+      bigPicture.querySelector('.likes-count').textContent = pictures[numberOfPic].likes;
+      bigPicture.querySelector('.comments-count').textContent = pictures[numberOfPic].comments.length;
+      socialCommentsWrapper.innerHTML = '';
+      for (var c = 0; c < pictures[numberOfPic].comments.length; c++) {
+        var comment = document.createElement('li');
+        comment.className = 'social__comment';
+        comment.innerHTML = '<img width="35" height="35" class="social__picture" > <p class="social__text"></p>';
+        comment.querySelector('.social__picture').src = pictures[numberOfPic].comments[c].avatar;
+        comment.querySelector('.social__picture').alt = pictures[numberOfPic].comments[c].name;
+        comment.querySelector('.social__text').textContent = pictures[numberOfPic].comments[c].message;
+        fragment.appendChild(comment);
+      }
+      socialCommentsWrapper.appendChild(fragment);
+      bigPicture.querySelector('.social__caption').textContent = pictures[numberOfPic].description;
+      bigPicture.querySelector('.social__comment-count').classList.add('hidden');
+      bigPicture.querySelector('.comments-loader').classList.add('hidden');
+    };
+
     imgFilters.classList.remove('img-filters--inactive');
 
   }, window.messages.errorHandler);

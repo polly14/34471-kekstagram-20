@@ -19,7 +19,7 @@
       return numberOfPic;
     };
     var numberOfPic = getIndexOfPic();
-    window.filteredGallery.renderBigPicture(numberOfPic);
+    window.renderBigPicture(numberOfPic);
     bigPicture.classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', onPicturePopupEscPress);
