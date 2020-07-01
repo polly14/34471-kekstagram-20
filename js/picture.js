@@ -23,6 +23,7 @@
     bigPicture.classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', onPicturePopupEscPress);
+    window.commentsHandler();
   };
   var closePicture = function () {
     if (socialFooterText !== document.activeElement) {
