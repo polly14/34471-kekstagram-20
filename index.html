@@ -34,7 +34,7 @@
 
             <!-- Изначальное состояние поля для загрузки изображения -->
             <fieldset class="img-upload__start">
-              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" required tabindex="0">
+              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" required tabindex="0" accept="image/gif, image/jpeg, image/jpg, image/png">
               <label for="upload-file" class="img-upload__label  img-upload__control">Загрузить</label>
             </fieldset>
 
@@ -52,7 +52,9 @@
 
                   <!-- Предварительный просмотр изображения -->
                   <div class="img-upload__preview">
+                    
                     <img src="img/upload-default-image.jpg" alt="Предварительный просмотр фотографии">
+                                        
                   </div>
 
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
@@ -239,10 +241,12 @@
   <script src="js/sorting.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/scale.js"></script>
+  <script src="js/image.js"></script>
   <script src="js/preview.js"></script>
   <script src="js/form.js"></script>
   <script src="js/picture.js"></script>
   <script src="js/loader.js"></script>
   <script src="js/messages.js"></script>
+  
 </body>
 </html>

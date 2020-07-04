@@ -14,7 +14,7 @@
   var onPopupEscPress = function (evt) {
     window.utils.isEscEvent(evt, closePopup);
   };
-  var openPopup = function () {
+  window.openPopup = function () {
     imgUploadOverlay.classList.remove('hidden');
     document.querySelector('body').classList.add('modal-open');
     document.addEventListener('keydown', onPopupEscPress);
@@ -35,12 +35,7 @@
       defaultPreviewThumb.checked = true;
     }
   };
-  uploadFile.addEventListener('change', function () {
-    openPopup();
-  });
-  uploadFile.addEventListener('keydown', function (evt) {
-    window.utils.isEnterEvent(evt, openPopup);
-  });
+
   uploadCancel.addEventListener('click', function () {
     closePopup();
   });
