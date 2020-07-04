@@ -33,6 +33,7 @@
       imgUploadPreview.style = '';
       imgUploadPreview.classList = '';
       defaultPreviewThumb.checked = true;
+      window.matches = false;
     }
   };
 
