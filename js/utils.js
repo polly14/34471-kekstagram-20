@@ -36,10 +36,6 @@
       }
       return result;
     },
-    getRandomNumber: function (min, max) {
-      var rand = min + Math.random() * (max + 1 - min);
-      return Math.floor(rand);
-    },
     getRandomArrWithoutRepeat: function (min, max) {
       var arr = [];
       for (var j = min; j <= max; j++) {
